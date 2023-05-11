@@ -29,7 +29,7 @@ class BaseModel:
         Returns: the class name, id and __dict__ in string format
 
         """
-        return f"{[self.__class__.__name__]} {self.id} {self.__dict__}"
+        return f"[{self.__class__.__name__}] {self.id} {self.__dict__}"
 
     def save(self):
         """
