@@ -3,7 +3,7 @@ import datetime
 import uuid
 
 
-class BaseModel():
+class BaseModel:
     """
     A class that defines all common attributes/methods for
     other classes.
@@ -18,13 +18,11 @@ class BaseModel():
             id: gives a unique id to instances
             created_at: assigns the current time to instances
             updated_at: assigns an updated time to instances
-        
         Returns: None
-
         """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.isoformat()
-        self.updated_at = datetime.isoformat()
+        self.created_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
 
     def __str__(self):
         """
@@ -37,9 +35,9 @@ class BaseModel():
         """
         updates the public instance attribute updated_at with the current
         datetime.
-
-        """ 
-        self.updated_at = datetime.datetime.now()
+        """
+        now = datetime.datetime.now()
+        self.updated_at = now.isoformat()
 
     def to_dict(self):
         """
