@@ -3,7 +3,7 @@ import datetime
 import uuid
 
 
-class BaseModel():
+class BaseModel:
     """
     A class that defines all common attributes/methods for
     other classes.
@@ -23,15 +23,15 @@ class BaseModel():
 
         """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.isoformat()
-        self.updated_at = datetime.isoformat()
+        self.created_at = datetime.now.isoformat()
+        self.updated_at = datetime.now.isoformat()
 
     def __str__(self):
         """
         Returns: the class name, id and __dict__ in string format
 
         """
-        return f"{self.__class__.__name__} {self.id} {self.__dict__}"
+        return f"{[self.__class__.__name__]} {self.id} {self.__dict__}"
 
     def save(self):
         """
@@ -39,7 +39,8 @@ class BaseModel():
         datetime.
 
         """ 
-        self.updated_at = datetime.datetime.now()
+        now = datetime.datetime.now()
+        self.updated_at = now.isoformat()
 
     def to_dict(self):
         """
