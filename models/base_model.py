@@ -18,13 +18,11 @@ class BaseModel:
             id: gives a unique id to instances
             created_at: assigns the current time to instances
             updated_at: assigns an updated time to instances
-        
         Returns: None
-
         """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now.isoformat()
-        self.updated_at = datetime.now.isoformat()
+        self.created_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
 
     def __str__(self):
         """
@@ -37,8 +35,7 @@ class BaseModel:
         """
         updates the public instance attribute updated_at with the current
         datetime.
-
-        """ 
+        """
         now = datetime.datetime.now()
         self.updated_at = now.isoformat()
 
