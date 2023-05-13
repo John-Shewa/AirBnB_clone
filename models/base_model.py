@@ -10,7 +10,7 @@ class BaseModel:
 
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Initializes the BaseModel
 
