@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-import datetime
-import uuid
+from datetime import datetime
+from uuid import uuid4
 
 
 class BaseModel:
@@ -20,9 +20,17 @@ class BaseModel:
             updated_at: assigns an updated time to instances
         Returns: None
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+        self.id = str(uuid4())
+        self.created_at = datetime.today()
+        self.updated_at = datetime.today()
+        timeformat = "%Y-%m-%dT%H:%M:%S.%f"
+
+        if kwargs is not None:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    self._dict_[key] = datetime.strptime(value, timeformat)
+                else:
+                    self.__dict__[key] = value
 
     def __str__(self):
         """
@@ -36,8 +44,7 @@ class BaseModel:
         updates the public instance attribute updated_at with the current
         datetime.
         """
-        now = datetime.datetime.now()
-        self.updated_at = now.isoformat()
+        self.updated_at = datetime.today()
 
     def to_dict(self):
         """
@@ -45,4 +52,8 @@ class BaseModel:
         of the instance
 
         """
-        return self.__dict__
+        dict = self.__dict__.copy()
+        dict["__class__"] = __class__.__name__
+        dict["created_at"] = self.created_at.isoformat()
+        dict["updated_at"] = self.updated_at.isoformat()
+        return dict
