@@ -10,10 +10,6 @@ class BaseModel:
 
     """
 
-    id: str
-    created_at: datetime
-    updated_at: datetime
-
     def __init__(self):
         """
         Initializes the BaseModel
@@ -33,7 +29,7 @@ class BaseModel:
         Returns: the class name, id and __dict__ in string format
 
         """
-        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
+        return "[{}] ({}){})".format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """
@@ -48,8 +44,11 @@ class BaseModel:
         of the instance
 
         """
-        dict_ = self.__dict__.copy()
-        dict_["__class__"] = self.__class__.__name__
-        dict_["created_at"] = dict_["created_at"].isoformat()
-        dict_["updated_at"] = dict_["created_at"].isoformat()
-        return dict_
+        new_dic = {}
+        for key, value in self.__dict__.items():
+            if key == "created_at" or key == "updated_at":
+                new_dict[key] = value.strftime("%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                new_dict[key] = value
+        new_dict["__class__"] = type(self).__name__
+        return new_dict
