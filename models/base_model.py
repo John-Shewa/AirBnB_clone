@@ -10,7 +10,7 @@ class BaseModel:
 
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Initializes the BaseModel
 
@@ -23,13 +23,16 @@ class BaseModel:
         self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
+        if kwargs:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
 
     def __str__(self):
         """
         Returns: the class name, id and __dict__ in string format
 
         """
-        return "[{}] ({}){})".format(type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {})".format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """
@@ -44,7 +47,7 @@ class BaseModel:
         of the instance
 
         """
-        new_dic = {}
+        new_dict = {}
         for key, value in self.__dict__.items():
             if key == "created_at" or key == "updated_at":
                 new_dict[key] = value.strftime("%Y-%m-%dT%H:%M:%S.%f")
