@@ -25,7 +25,11 @@ class BaseModel:
         self.updated_at = datetime.now()
         if kwargs:
             for key, value in kwargs.items():
-                setattr(self, key, value)
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        setattr(self, key, datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f"))
+                    else:
+                        setattr(self, key, value)
 
     def __str__(self):
         """
@@ -39,7 +43,8 @@ class BaseModel:
         updates the public instance attribute updated_at with the current
         datetime.
         """
-        self.updated_at = datetime.now()
+        now = datetime.datetime.now()
+        self.updated_at = now.isoformat()
 
     def to_dict(self):
         """
