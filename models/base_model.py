@@ -9,6 +9,9 @@ class BaseModel:
     other classes.
 
     """
+    id: str
+    created_at = datetime
+    updated_at = datetime
 
     def __init__(self):
         """
@@ -20,7 +23,7 @@ class BaseModel:
             updated_at: assigns an updated time to instances
         Returns: None
         """
-        self.id = str(uuid4())
+        self.id = str(uuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
     
