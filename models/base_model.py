@@ -9,10 +9,6 @@ class BaseModel:
     other classes.
 
     """
-    id: str
-    created_at = datetime
-    updated_at = datetime
-
     def __init__(self):
         """
         Initializes the BaseModel
@@ -24,8 +20,8 @@ class BaseModel:
         Returns: None
         """
         self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        self.created_at = datetime.datetime.now()
+        self.updated_at = datetime.datetime.now()
     
     def __str__(self):
         """
@@ -39,7 +35,8 @@ class BaseModel:
         updates the public instance attribute updated_at with the current
         datetime.
         """
-        self.update_updated_at = datetime.now()
+        now = datetime.datetime.now()
+        self.updated_at = now.isoformat()
 
     def to_dict(self):
         """
@@ -47,8 +44,4 @@ class BaseModel:
         of the instance
 
         """
-        dict_ = self.__dict__.copy()
-        dict_["__class__"] = self.__class__.__name__
-        dict_["created_at"] = dict_[created_at].isoformat()
-        dict_["updated_at"] = dict_[updated_at].isoformat()
-        return dict_
+        return self.__dict__
