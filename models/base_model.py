@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from datetime import datetime
-from uuid import uuid4
+import uuid
 
 
 class BaseModel:
@@ -10,7 +10,7 @@ class BaseModel:
 
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         """
         Initializes the BaseModel
 
@@ -21,30 +21,22 @@ class BaseModel:
         Returns: None
         """
         self.id = str(uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
-        timeformat = "%Y-%m-%dT%H:%M:%S.%f"
-
-        if kwargs is not None:
-            for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    self._dict_[key] = datetime.strptime(value, timeformat)
-                else:
-                    self.__dict__[key] = value
-
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+    
     def __str__(self):
         """
         Returns: the class name, id and __dict__ in string format
 
         """
-        return f"[{self.__class__.__name__}] {self.id} {self.__dict__}"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
         """
         updates the public instance attribute updated_at with the current
         datetime.
         """
-        self.updated_at = datetime.today()
+        self.update_updated_at = datetime.now()
 
     def to_dict(self):
         """
@@ -52,8 +44,8 @@ class BaseModel:
         of the instance
 
         """
-        dict = self.__dict__.copy()
-        dict["__class__"] = __class__.__name__
-        dict["created_at"] = self.created_at.isoformat()
-        dict["updated_at"] = self.updated_at.isoformat()
-        return dict
+        dict_ = self.__dict__.copy()
+        dict_["__class__"] = self.__class__.__name__
+        dict_["created_at"] = dict_[created_at].isoformat()
+        dict_["updated_at"] = dict_[updated_at].isoformat()
+        return dict_
